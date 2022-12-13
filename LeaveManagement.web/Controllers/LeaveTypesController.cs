@@ -9,9 +9,12 @@ using LeaveManagement.web.Data;
 using AutoMapper;
 using LeaveManagement.web.Models;
 using LeaveManagement.web.Contracts;
+using Microsoft.AspNetCore.Authorization;
+using LeaveManagement.web.Constants;
 
 namespace LeaveManagement.web.Controllers
 {
+    [Authorize(Roles =Roles.Administrator)]
     public class LeaveTypesController : Controller
     {
         private readonly ILeaveTypeRepository leaveTypeRepository;
@@ -30,6 +33,7 @@ namespace LeaveManagement.web.Controllers
               return View(leaveTypes);
         }
 
+        
         // GET: LeaveTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         { 
@@ -43,6 +47,7 @@ namespace LeaveManagement.web.Controllers
             return View(leaveTypeVM);
         }
 
+      
         // GET: LeaveTypes/Create
         public IActionResult Create()
         {
@@ -52,6 +57,7 @@ namespace LeaveManagement.web.Controllers
         // POST: LeaveTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( LeaveTypeVM leaveTypeVM)
@@ -66,6 +72,7 @@ namespace LeaveManagement.web.Controllers
         }
 
         // GET: LeaveTypes/Edit/5
+      
         public async Task<IActionResult> Edit(int? id)
         {
             var leaveType = await leaveTypeRepository.GetAsync(id);
@@ -83,6 +90,8 @@ namespace LeaveManagement.web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+       
+
         public async Task<IActionResult> Edit(int id,  LeaveTypeVM leaveTypeVM)
         {
             if (id != leaveTypeVM.Id)
@@ -113,9 +122,8 @@ namespace LeaveManagement.web.Controllers
             return View(leaveTypeVM);
         }
 
-       
-
         // POST: LeaveTypes/Delete/5
+       
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
